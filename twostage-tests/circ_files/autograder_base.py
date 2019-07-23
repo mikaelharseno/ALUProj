@@ -22,11 +22,18 @@ if log:
 
 
 def student_reference_match_unbounded(student_out, reference_out):
+  warning_printed = False
   while True:
     line1 = student_out.readline()
     line2 = reference_out.readline()
     if line2 == '':
       break
+
+    # check for disconnected harness
+    if 'xxxx' in line1 and not warning_printed:
+      warning_printed = True
+      print("Warning: undefined results found in student output. It's likely that the harness is not connecting to your inputs and outputs.")
+
     if line1 != line2:
       return False
   return True
